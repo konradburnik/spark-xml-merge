@@ -5,7 +5,7 @@ import org.apache.spark.sql.SparkSession
 class CSVToXMLConverter(spark: SparkSession) {
 
   def convert(inputCSVPath: String, outputXMLPath: String,
-              recordName: String = "record", tableName: String = "table"): Unit = {
+              tableName: String, recordName: String): Unit = {
     import spark.implicits._
 
     val df = spark.read

@@ -9,7 +9,7 @@ object CSVToXML {
     if (args.size < 2) {
       val appName = getClass.getSimpleName.split('$').head
       val appDesc = "Convert CSV to XML"
-      val appParams = "<csv-path> <xml-path>"
+      val appParams = "<csv-path> <xml-path> [table-name] [record-name]"
       println(s"\n$appName - $appDesc\n\nUsage:\n\t$appName $appParams\n")
     } else {
       val spark: SparkSession = SparkSession.builder()
@@ -22,7 +22,9 @@ object CSVToXML {
 
       new CSVToXMLConverter(spark).convert(
         inputCSVPath = args(0),
-        outputXMLPath = args(1)
+        outputXMLPath = args(1),
+        tableName = if (args isDefinedAt 2) args(2) else "table",
+        recordName = if (args isDefinedAt 3) args(3) else "record"
       )
     }
   }

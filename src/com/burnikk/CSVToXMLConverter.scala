@@ -4,7 +4,8 @@ import org.apache.spark.sql.SparkSession
 
 class CSVToXMLConverter(spark: SparkSession) {
 
-  def convert(inputCSVPath: String, outputXMLPath: String, recordName: String = "record"): Unit = {
+  def convert(inputCSVPath: String, outputXMLPath: String,
+              recordName: String = "record", tableName: String = "table"): Unit = {
     import spark.implicits._
 
     val df = spark.read
@@ -12,7 +13,9 @@ class CSVToXMLConverter(spark: SparkSession) {
       .csv(inputCSVPath)
 
     val schema = df.schema.fields.zipWithIndex
-    val result = df.mapPartitions(partition => {
+    val header = Seq(s"<$tableName>").toDS()
+    val footer = Seq(s"</$tableName>").toDS()
+    val body = df.mapPartitions(partition => {
       partition.map(record => {
         val value = schema.map(field => {
           val fieldName = field._1.name
@@ -24,6 +27,7 @@ class CSVToXMLConverter(spark: SparkSession) {
            |</$recordName>""".stripMargin
       })
     })
+    val result = header.union(body.union(footer))
 
     result.write
       .mode("overwrite")

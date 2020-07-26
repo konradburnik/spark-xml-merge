@@ -6,8 +6,6 @@ scalaVersion := "2.12.11"
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.6" % "provided"
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.6" % "provided"
-libraryDependencies += "com.thoughtworks.xstream" % "xstream" % "1.4.12"
-libraryDependencies += "com.databricks" %% "spark-xml" % "0.9.0"
 
 mainClass in assembly := Some("com.burnikk.CSVToXML")
 

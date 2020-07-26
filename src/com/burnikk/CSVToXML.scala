@@ -13,7 +13,7 @@ object CSVToXML {
       println(s"\n$appName - $appDesc\n\nUsage:\n\t$appName $appParams\n")
     } else {
       val spark: SparkSession = SparkSession.builder()
-        .config("spark.master", "local")
+        .config("spark.master", "local[*]")
         .config("appName", "CSVToXMLConverter")
         .getOrCreate()
 

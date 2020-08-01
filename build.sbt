@@ -1,13 +1,14 @@
-name := "spark-csv-to-xml"
+name := "spark-xml-merge"
 
 version := "0.1"
 
-scalaVersion := "2.12.11"
+scalaVersion := "2.11.12"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.6" % "provided"
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.6" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.6"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.6"
+libraryDependencies += "com.databricks" %% "spark-xml" % "0.5.0"
 
-mainClass in assembly := Some("com.burnikk.CSVToXML")
+mainClass in assembly := Some("com.burnikk.XMLMerger")
 
 assemblyMergeStrategy in assembly := {
   case PathList("javax", "servlet", xs @ _*)  => MergeStrategy.first
